@@ -1,6 +1,35 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/*
- * Personaliza tu tema aquí
- * Documentación: https://tailwindcss.com/docs/theme
- */
+@layer base {
+  body {
+    @apply bg-stone-50 text-zinc-900 antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+}
+
+/* Impresión / "Guardar como PDF": solo el documento de ROI, sin cromo de la app. */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

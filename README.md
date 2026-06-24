@@ -1,177 +1,124 @@
-# Raíz
+# Calculadora de Valor
 
-Template production-ready para crear aplicaciones SaaS con desarrollo asistido por IA. Filosofia Agent-First: el usuario dice que quiere, el agente construye todo.
+> Ponle precio defendible a lo que construyes con IA. En menos de 5 minutos, sin hablar de tecnología.
 
-## Que incluye
+Una herramienta conversacional para freelancers, agencias y consultores que construyen
+agentes, automatizaciones y SaaS con IA y **no saben cuánto cobrar**. Describe el proyecto
+que construiste y sal con un precio en tres tramos, un script de venta, un resumen de ROI
+para el cliente y la estructura del contrato — en USD y EUR, adaptado al mercado LATAM/España.
 
-- Next.js 16 (App Router) + TypeScript
-- Supabase (Database + Auth + RLS)
-- Tailwind CSS + shadcn/ui
-- 24 Skills de Claude Code
-- Playwright CLI para QA automatizado
-- AI Templates (Vercel AI SDK v5 + OpenRouter)
-- 5 Design Systems listos para usar
-- Arquitectura Feature-First optimizada para IA
-- Auto-Blindaje: el sistema aprende de cada error
+![Resultado: tres tramos de precio con justificación](docs/captura-precios.png)
 
-## Quick Start
-
-### 1. Instalar
-
-```bash
-npm install
-```
-
-### 2. Variables de Entorno
-
-```bash
-cp .env.example .env.local
-# Editar con credenciales de Supabase
-```
-
-### 3. MCPs (Opcional)
-
-```bash
-cp .claude/example.mcp.json .mcp.json
-# Editar con project ref de Supabase
-```
-
-### 4. Desarrollar
-
-```bash
-npm run dev
-# Auto-detecta puerto disponible (3000-3006)
-```
-
-## Tech Stack
-
-```yaml
-Runtime: Node.js + TypeScript
-Framework: Next.js 16 (App Router)
-Database: PostgreSQL/Supabase
-Styling: Tailwind CSS 3.4
-Components: shadcn/ui
-State: Zustand
-Validation: Zod
-AI Engine: Vercel AI SDK v5 + OpenRouter
-Testing: Playwright CLI + MCP
-Deploy: Vercel
-```
-
-## Arquitectura Feature-First
-
-```
-src/
-├── app/                      # Next.js App Router
-│   ├── (auth)/              # Rutas auth
-│   ├── (main)/              # Rutas principales
-│   └── layout.tsx
-│
-├── features/                 # Organizadas por funcionalidad
-│   └── [feature]/
-│       ├── components/
-│       ├── hooks/
-│       ├── services/
-│       ├── types/
-│       └── store/
-│
-└── shared/                   # Codigo reutilizable
-    ├── components/
-    ├── hooks/
-    ├── lib/
-    └── types/
-```
-
-## Skills (24 total)
-
-| Skill | Que hace |
-|-------|----------|
-| `new-app` | Entrevista de negocio → BUSINESS_LOGIC.md |
-| `primer` | Inicializar contexto del proyecto |
-| `add-login` | Auth completo (Email + Google OAuth + profiles + RLS) |
-| `add-payments` | Pagos: checkout, webhooks, suscripciones |
-| `add-emails` | Emails transaccionales (Resend + React Email) |
-| `add-mobile` | PWA instalable + notificaciones push |
-| `website-3d` | Landing cinematica scroll-stop + copy de alta conversion |
-| `prp` | Planificar features complejas antes de implementar |
-| `bucle-agentico` | Implementar features complejas por fases |
-| `ai` | Agregar IA: chat, RAG, vision, tools, structured outputs |
-| `supabase` | Todo BD: tablas, RLS, migraciones, queries |
-| `playwright-cli` | QA automatizado con browser real |
-| `memory-manager` | Memoria persistente por proyecto |
-| `image-generation` | Generar y editar imagenes (OpenRouter + Gemini) |
-| `video-visuals` | Paquetes visuales para video/presentacion |
-| `autoresearch` | Auto-optimizar skills (patron Karpathy) |
-| `skill-creator` | Crear nuevos skills |
-| `design-review` | Critica y pule la UI (anti-AI-slop) |
-| `security-audit` | Auditoria de seguridad (RLS, secrets, XSS, npm audit) |
-| `plan` | Pipeline de planificacion (10 docs → Blueprint) antes de construir |
-| `architecture-review` | Revision de arquitectura (acoplamiento, capas, deuda) |
-| `performance-review` | Revision de performance (N+1, bundle, caché, indices) |
-| `update-raiz` | Actualizar (merge 3-way, no pisa tu codigo) |
-| `eject-raiz` | Remover Raíz (destructivo) |
-
-## AI Templates
-
-Bloques LEGO para construir features de IA con Vercel AI SDK v5 + OpenRouter:
-
-| Template | Que hace |
-|----------|----------|
-| setup-base | Configuracion inicial |
-| chat | Chat streaming con useChat |
-| web-search | Busqueda con :online |
-| historial | Persistencia en Supabase |
-| vision | Analisis de imagenes |
-| tools | Funciones/herramientas |
-| rag | pgvector + embeddings |
-| single-call | generateText() puntual |
-| structured-outputs | generateObject() con Zod |
-| generative-ui | LLM decide que componente renderizar |
-
-## Design Systems
-
-5 sistemas visuales listos en `.claude/design-systems/`:
-
-- **Liquid Glass** - iOS-like, transparencias
-- **Gradient Mesh** - Degradados fluidos
-- **Neumorphism** - Soft UI, sombras suaves
-- **Bento Grid** - Grids asimetricos
-- **Neobrutalism** - Bold, bordes duros
-
-## Comandos
-
-```bash
-npm run dev          # Desarrollo (auto-port 3000-3006)
-npm run build        # Build produccion
-npm run typecheck    # TypeScript check
-npm run lint         # ESLint
-```
-
-## Deploy
-
-```bash
-# Vercel (recomendado)
-npm install -g vercel
-vercel
-```
-
-Variables en Vercel Dashboard:
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
-## Estructura .claude/
-
-```
-.claude/
-├── skills/              # 24 skills (skills/ai/references/ trae los templates de IA)
-├── memory/              # Memoria persistente del proyecto
-├── blindajes/           # Memoria de errores compartida entre proyectos
-├── PRPs/                # Product Requirements Proposals
-├── design-systems/      # 5 sistemas de diseno
-├── hooks/               # Scripts en eventos
-└── example.mcp.json     # Config de MCPs
-```
+![Resumen de ROI listo para el cliente](docs/captura-roi.png)
 
 ---
 
-**Raíz** | Agent-First. De una raíz, todos tus proyectos.
+## El problema
+
+Los constructores de IA enfrentan tres fricciones al cerrar un cliente:
+
+1. **No saben cuánto cobrar** por lo que construyen.
+2. **No saben justificar el precio** sin sonar a "vende humos".
+3. **No calculan su margen real** (APIs, VPS, tokens, mantenimiento).
+
+Esta herramienta resuelve el problema **comercial**: cómo monetizar lo que construyes.
+
+## Cómo funciona
+
+El flujo tiene tres fases:
+
+1. **Intake (formulario guiado).** Respondes 6 preguntas: qué construiste, para qué nicho,
+   cuántas horas te tomó, qué stack usaste, el tamaño del cliente y la modalidad de venta.
+2. **Estimación de valor.** La IA estima los valores de mercado (tarifa del nicho, horas
+   ahorradas, ingresos habilitados, costos de operación). **Los puedes editar todos**: el
+   precio se recalcula al instante.
+3. **Propuesta.** Obtienes tres precios (mínimo / recomendado / premium), un script de venta,
+   un resumen de ROI de una página (exportable a PDF) y la estructura del contrato.
+
+### El precio es determinista, no inventado
+
+La decisión de diseño central: **un motor de pricing en TypeScript puro calcula todos los
+precios**. La IA nunca calcula ni redondea una cifra — solo estima valores de mercado (que tú
+confirmas) y redacta la prosa de venta alrededor de números ya congelados.
+
+Esto importa porque hace los precios **reproducibles y defendibles**: la misma entrada
+siempre da el mismo precio, y cada cifra se traza a una fórmula que puedes inspeccionar.
+
+La lógica (en [`src/features/calculator/services/pricing/`](src/features/calculator/services/pricing)):
+
+- **Valor mensual al cliente** = horas ahorradas × tarifa del nicho + ingresos habilitados.
+- **Costo de operación** = APIs + infraestructura + (horas de mantenimiento × tu tarifa).
+- **Multiplicador 5x–10x** según el tamaño del cliente y el ROI.
+- **Precio recomendado** = `min(costo × multiplicador, 25% del valor generado)` — topado al
+  25% del valor para que el cliente conserve siempre ≥75%. Eso es lo que lo hace defendible.
+
+## Stack
+
+| Capa | Tecnología |
+|------|------------|
+| Framework | Next.js 16 + React 19 + TypeScript |
+| Estilos | Tailwind CSS 3.4 |
+| IA | Vercel AI SDK v6 + OpenRouter (Claude Sonnet) |
+| Validación | Zod |
+| Estado | Zustand |
+| Tests | Vitest (motor de pricing) + Playwright (e2e) |
+
+## Puesta en marcha
+
+Requisitos: Node 18+ y una API key de [OpenRouter](https://openrouter.ai/).
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Configurar variables de entorno
+cp .env.example .env.local
+# Edita .env.local y pega tu propia OPENROUTER_API_KEY
+
+# 3. Arrancar
+npm run dev
+```
+
+Abre **http://localhost:3000** y entra a la calculadora.
+
+> **Sin API key igual funciona:** el precio determinista se calcula y los estimados caen a
+> tablas de referencia LATAM/España. Solo la redacción de la IA (script, ROI, contrato) queda
+> deshabilitada, con un botón para reintentar cuando agregues la key.
+
+### Variables de entorno
+
+| Variable | Requerida | Para qué |
+|----------|-----------|----------|
+| `OPENROUTER_API_KEY` | Recomendada | Estimaciones y redacción con IA. Cada quien usa la suya. |
+| `NEXT_PUBLIC_USD_TO_EUR` | No (default 0.92) | Tipo de cambio USD→EUR mostrado. |
+
+> Tu `.env.local` está en `.gitignore` y **nunca** se sube al repo. Si compartes el proyecto
+> por git, tu clave no viaja. (Si lo compartes como `.zip` de la carpeta, sí incluiría
+> `.env.local` — usa `git archive` o GitHub para compartir de forma segura.)
+
+## Scripts
+
+```bash
+npm run dev         # Servidor de desarrollo
+npm run build       # Build de producción
+npm run typecheck   # Verificación de tipos (tsc --noEmit)
+npm run test        # Tests del motor de pricing (Vitest)
+npm run test:e2e    # Smoke e2e del flujo (requiere dev server + npx playwright install chromium)
+```
+
+## Notas de la versión actual (MVP)
+
+- **Sin login.** Todo corre en memoria; no se persiste nada. (Listo para agregar auth después.)
+- **Export a PDF** vía la impresión del navegador ("Guardar como PDF"), con CSS que aísla el
+  resumen de ROI de una página.
+- **Mercado LATAM/España:** tarifas conservadoras por defecto, cifras en USD y EUR.
+
+## Arquitectura
+
+Feature-First: todo lo de la calculadora vive en
+[`src/features/calculator/`](src/features/calculator) (schemas, motor de pricing, servicios de
+IA, store y componentes). Las rutas de IA están en `src/app/api/calculator/`.
+
+---
+
+Construido con **Raíz** para la comunidad **Imperio Agéntico**.

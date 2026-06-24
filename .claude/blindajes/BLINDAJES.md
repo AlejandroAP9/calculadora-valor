@@ -11,6 +11,7 @@
 | [allowed_tools del claude-agent-sdk no bloquea de verdad](claude-agent-sdk-allowed-tools-no-bloquea.md) | [claude-agent-sdk, ai, security] | educmark |
 | [Contenedor que fetchea su propio VPS por URL publica = hairpin NAT](container-fetch-hairpin-nat.md) | [docker, networking, ops] | educmark |
 | [Job fantasma: revisa .github/workflows/ antes que los crons del backend](github-actions-antes-que-crons.md) | [ci, cron, github-actions, debugging] | educmark |
+| [globals.css usa @import 'tailwindcss' (sintaxis Tailwind v4) pero el proyecto tiene Tailwind 3.4 + plugin PostCSS v3 -> no se renderiza ningun estilo](globals-css-usa-import-tailwindcss-sintaxis-tailwind-v4-pero-el-proyecto-tiene-tailwind-3-4-plugin-postcss-v3-no-se-renderiza-ningun-estilo.md) | [tailwind, css, template, styling] | calculadora-valor |
 | [Un 4xx no es caida: en healthchecks alerta solo en 5xx/timeout](healthcheck-4xx-no-es-caida.md) | [monitoring, healthcheck, ops] | educmark |
 | [Heredocs con placeholders <X> no son robustos](heredoc-placeholder-angle-brackets.md) | [bash, shell, dx] | educmark |
 | [Tu BD en vivo guarda logica que tu repo no conoce](live-db-tiene-fantasmas.md) | [supabase, postgres, debugging, migrations] | educmark |

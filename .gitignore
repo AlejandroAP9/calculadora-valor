@@ -13,6 +13,8 @@ pnpm-lock.yaml
 /.next/
 /out/
 *.rsc
+next-env.d.ts
+*.tsbuildinfo
 
 # Production
 /build
@@ -57,6 +59,7 @@ Thumbs.db
 # Claude Code
 .claude/skills/**/node_modules
 .claude/plugins
+.claude/logs
 *.mcp.json
 !example.mcp.json
 
