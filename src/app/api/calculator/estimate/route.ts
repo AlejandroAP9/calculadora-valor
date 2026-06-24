@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { CALCULATOR_RATE_LIMIT, clientIp, rateLimit } from '@/lib/rateLimit'
 import { CalculatorInputsSchema } from '@/features/calculator/schemas/inputs.schema'
 import { MISSING_API_KEY_MESSAGE, extractApiKey } from '@/features/calculator/services/apiKey'
 import { estimateValues } from '@/features/calculator/services/estimateValues'
@@ -8,6 +9,18 @@ export const maxDuration = 60
 
 /** POST { inputs: CalculatorInputs, apiKey: string } → { estimates, usedFallback } */
 export async function POST(req: Request) {
+  const limit = rateLimit(
+    `estimate:${clientIp(req)}`,
+    CALCULATOR_RATE_LIMIT.limit,
+    CALCULATOR_RATE_LIMIT.windowMs,
+  )
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: 'Demasiadas solicitudes. Espera un momento y reintenta.' },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } },
+    )
+  }
+
   let body: unknown
   try {
     body = await req.json()

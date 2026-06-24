@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { FX } from '@/lib/config/currency'
+import { CALCULATOR_RATE_LIMIT, clientIp, rateLimit } from '@/lib/rateLimit'
 import { ValueEstimatesSchema } from '@/features/calculator/schemas/estimates.schema'
 import { CalculatorInputsSchema } from '@/features/calculator/schemas/inputs.schema'
 import { MISSING_API_KEY_MESSAGE, extractApiKey } from '@/features/calculator/services/apiKey'
@@ -15,6 +16,18 @@ export const maxDuration = 60
  * pricing igual y un flag de error para que la UI ofrezca reintentar.
  */
 export async function POST(req: Request) {
+  const limit = rateLimit(
+    `proposal:${clientIp(req)}`,
+    CALCULATOR_RATE_LIMIT.limit,
+    CALCULATOR_RATE_LIMIT.windowMs,
+  )
+  if (!limit.ok) {
+    return NextResponse.json(
+      { error: 'Demasiadas solicitudes. Espera un momento y reintenta.' },
+      { status: 429, headers: { 'Retry-After': String(limit.retryAfterSec) } },
+    )
+  }
+
   let body: unknown
   try {
     body = await req.json()

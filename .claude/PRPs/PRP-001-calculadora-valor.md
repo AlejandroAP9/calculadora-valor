@@ -130,3 +130,11 @@ cuando `generateObject` falla.
    acotar el costo de tokens por request. Resto de la auditoría: secretos limpios,
    key server-only, Zod en entradas, sin XSS, prompt injection mitigado por el
    motor determinista.
+5. **Rate limiting (2026-06-24)**: las rutas `/api/calculator/*` ahora pasan por
+   un limiter de ventana fija en memoria (`src/lib/rateLimit.ts`), 15 req/min por
+   IP por ruta → 429 con `Retry-After`. Con BYOK no protege el bolsillo del dueño
+   (el consumo de IA lo paga cada usuario), sino los recursos del servidor y frena
+   loops/scripts. Limitación documentada: en memoria es exacto en single-instance
+   (Docker/Easypanel); en serverless multi-instancia es best-effort → cambiar por
+   un store compartido (Redis/Upstash) manteniendo la firma. Testeado (`now`
+   inyectable).
