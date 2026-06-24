@@ -7,6 +7,12 @@ agentes, automatizaciones y SaaS con IA y **no saben cuánto cobrar**. Describe 
 que construiste y sal con un precio en tres tramos, un script de venta, un resumen de ROI
 para el cliente y la estructura del contrato — en USD y EUR, adaptado al mercado LATAM/España.
 
+**Hazla tuya:** clónala y córrela en local, o despliégala en tu propia cuenta con un clic.
+No necesita ninguna variable de entorno: pones tu propia API key de OpenRouter dentro de la
+app (BYOK) y cada quien paga su propio consumo.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FAlejandroAP9%2Fcalculadora-valor&project-name=calculadora-valor&repository-name=calculadora-valor)
+
 ![Resultado: tres tramos de precio con justificación](docs/captura-precios.png)
 
 ![Resumen de ROI listo para el cliente](docs/captura-roi.png)
