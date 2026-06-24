@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   footer: { position: 'absolute', bottom: 28, left: 48, right: 48, fontSize: 8, color: MUTE, borderTopWidth: 1, borderTopColor: LINE, paddingTop: 8 },
 })
 
-function ProposalDocument({
+/** Exportado para test de render; en runtime se usa vía downloadProposalPdf. */
+export function ProposalDocument({
   pricing,
   proposal,
   inputs,
