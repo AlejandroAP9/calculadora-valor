@@ -40,23 +40,11 @@ else
   echo "  ✓ .env.local ya existe (no lo toco)"
 fi
 
-# 4) API key de OpenRouter. Solo si hay terminal interactiva y aún no hay key.
-if [ "$START" -eq 1 ] && [ -t 0 ] && ! grep -qE '^OPENROUTER_API_KEY=.+' .env.local; then
-  echo ""
-  echo "  Para que la IA redacte el script de venta y el ROI necesitas una API key"
-  echo "  de OpenRouter (créala gratis en https://openrouter.ai/keys)."
-  printf "  Pega tu OPENROUTER_API_KEY (o Enter para omitir): "
-  read -r KEY || KEY=""
-  if [ -n "$KEY" ]; then
-    tmp=$(mktemp)
-    awk -v k="$KEY" '/^OPENROUTER_API_KEY=/{print "OPENROUTER_API_KEY=" k; next} {print}' .env.local > "$tmp"
-    mv "$tmp" .env.local
-    echo "  ✓ Key guardada en .env.local (protegida por .gitignore, no se sube al repo)"
-  else
-    echo "  • Sin key: el precio igual se calcula; la redacción con IA queda desactivada"
-    echo "    (puedes pegarla luego en .env.local y reiniciar)."
-  fi
-fi
+# 4) API key de OpenRouter (BYOK). No se pide aquí: cada usuario pega su propia
+#    key dentro de la app y se guarda sólo en su navegador. Así cada quien paga
+#    su consumo y no queda ninguna clave en archivos del servidor.
+echo "  • La API key de OpenRouter se pega dentro de la app, no aquí."
+echo "    Créala gratis en https://openrouter.ai/keys (cada quien usa la suya)."
 
 echo ""
 echo "  ✓ Instalación lista."

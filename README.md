@@ -75,26 +75,28 @@ Manual, en 3 pasos:
 # 1. Instalar dependencias
 npm install
 
-# 2. Configurar variables de entorno
+# 2. Configurar variables de entorno (no necesitas tocar nada para empezar)
 cp .env.example .env.local
-# Edita .env.local y pega tu propia OPENROUTER_API_KEY
 
 # 3. Arrancar
 npm run dev
 ```
 
-Abre **http://localhost:3000** y entra a la calculadora.
+Abre **http://localhost:3000** y pega tu API key de OpenRouter cuando la app te la pida.
 
-> **Sin API key igual funciona:** el precio determinista se calcula y los estimados caen a
-> tablas de referencia LATAM/España. Solo la redacción de la IA (script, ROI, contrato) queda
-> deshabilitada, con un botón para reintentar cuando agregues la key.
+> **BYOK (Bring Your Own Key):** cada persona pega su propia API key de OpenRouter dentro de
+> la app; se guarda sólo en su navegador (nunca en el servidor ni en git) y cada quien paga su
+> propio consumo. El motor de precios es determinista, pero el cálculo se dispara desde la app
+> una vez que pegaste tu key.
 
 ### Variables de entorno
 
 | Variable | Requerida | Para qué |
 |----------|-----------|----------|
-| `OPENROUTER_API_KEY` | Recomendada | Estimaciones y redacción con IA. Cada quien usa la suya. |
 | `NEXT_PUBLIC_USD_TO_EUR` | No (default 0.92) | Tipo de cambio USD→EUR mostrado. |
+| `OPENROUTER_MODEL_*` | No | Override de los slugs de modelo (balanced/powerful). |
+
+> La API key de OpenRouter **no** es variable de entorno: se ingresa en la interfaz (BYOK).
 
 > Tu `.env.local` está en `.gitignore` y **nunca** se sube al repo. Si compartes el proyecto
 > por git, tu clave no viaja. (Si lo compartes como `.zip` de la carpeta, sí incluiría
