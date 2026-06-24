@@ -1,12 +1,15 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider'
 
 /**
- * Provider de OpenRouter para el Vercel AI SDK.
+ * Provider de OpenRouter para el Vercel AI SDK — patrón BYOK (Bring Your Own Key).
+ * Cada usuario trae SU propia API key, así cada uno paga su propio consumo y no
+ * existe una clave del servidor que abusar. La key llega por request desde el
+ * cliente; jamás se persiste en BD ni se loguea.
  * Server-only: no importar desde componentes cliente.
  */
-export const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY ?? '',
-})
+export function getOpenRouter(apiKey: string) {
+  return createOpenRouter({ apiKey })
+}
 
 /**
  * Modelos por rol. Los slugs son overridables por env para no tocar código si

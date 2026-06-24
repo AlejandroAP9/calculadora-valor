@@ -1,5 +1,5 @@
 import { generateObject } from 'ai'
-import { MODELS, openrouter } from '@/lib/ai/openrouter'
+import { MODELS, getOpenRouter } from '@/lib/ai/openrouter'
 import { ProposalSchema } from '@/features/calculator/schemas/output.schema'
 import type { CalculatorInputs, PricingResult, Proposal } from '@/features/calculator/types'
 import { PROPOSAL_SYSTEM_PROMPT, buildProposalPrompt } from './prompts'
@@ -12,7 +12,9 @@ import { PROPOSAL_SYSTEM_PROMPT, buildProposalPrompt } from './prompts'
 export async function generateProposal(
   inputs: CalculatorInputs,
   pricing: PricingResult,
+  apiKey: string,
 ): Promise<Proposal> {
+  const openrouter = getOpenRouter(apiKey)
   const { object } = await generateObject({
     model: openrouter(MODELS.powerful),
     schema: ProposalSchema,

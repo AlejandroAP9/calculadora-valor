@@ -1,5 +1,5 @@
 import { generateObject } from 'ai'
-import { MODELS, openrouter } from '@/lib/ai/openrouter'
+import { MODELS, getOpenRouter } from '@/lib/ai/openrouter'
 import { ValueEstimatesSchema } from '@/features/calculator/schemas/estimates.schema'
 import type { CalculatorInputs, ValueEstimates } from '@/features/calculator/types'
 import { fallbackEstimates } from './pricing/defaults'
@@ -16,8 +16,12 @@ export interface EstimateResult {
  * (modelo sin soporte, schema inválido, sin API key), cae a las tablas de
  * referencia LATAM/España: el flujo NUNCA se rompe por culpa de la IA.
  */
-export async function estimateValues(inputs: CalculatorInputs): Promise<EstimateResult> {
+export async function estimateValues(
+  inputs: CalculatorInputs,
+  apiKey: string,
+): Promise<EstimateResult> {
   try {
+    const openrouter = getOpenRouter(apiKey)
     const { object } = await generateObject({
       model: openrouter(MODELS.balanced),
       schema: ValueEstimatesSchema,

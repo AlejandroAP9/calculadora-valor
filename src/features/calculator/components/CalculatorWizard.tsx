@@ -1,8 +1,11 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { WIZARD_FIELDS, useCalculatorStore } from '@/features/calculator/store/useCalculatorStore'
+import { useApiKeyStore } from '@/features/calculator/store/useApiKeyStore'
 import type { CalculatorInputs } from '@/features/calculator/types'
 import { usePricing } from '@/features/calculator/hooks/usePricing'
+import { ApiKeyField } from './ApiKeyField'
 import { EstimatesReview } from './EstimatesReview'
 import { ResultView } from './ResultView'
 import { WizardProgress } from './WizardProgress'
@@ -35,7 +38,14 @@ export function CalculatorWizard() {
   const inputs = useCalculatorStore((s) => s.inputs)
   const nextStep = useCalculatorStore((s) => s.nextStep)
   const prevStep = useCalculatorStore((s) => s.prevStep)
+  const apiKey = useApiKeyStore((s) => s.apiKey)
   const { runEstimate } = usePricing()
+
+  // La key viene de localStorage (persist); leerla sólo tras montar evita un
+  // mismatch de hidratación en el atributo disabled del botón.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  const hasKey = mounted && apiKey.trim().length > 0
 
   if (phase === 'estimating') {
     return <Loading label="Analizando tu proyecto y estimando el valor de mercado…" />
@@ -64,7 +74,7 @@ export function CalculatorWizard() {
             ← Atrás
           </Button>
           {isLast ? (
-            <Button onClick={() => runEstimate()} disabled={!ready}>
+            <Button onClick={() => runEstimate()} disabled={!ready || !hasKey}>
               Calcular valor →
             </Button>
           ) : (
@@ -74,6 +84,12 @@ export function CalculatorWizard() {
           )}
         </div>
       </div>
+      <ApiKeyField />
+      {isLast && ready && !hasKey ? (
+        <p className="mx-auto mt-2 w-full max-w-2xl text-center text-sm text-amber-600">
+          Pega tu API key de OpenRouter arriba para calcular tu precio.
+        </p>
+      ) : null}
     </div>
   )
 }

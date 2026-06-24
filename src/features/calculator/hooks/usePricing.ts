@@ -5,6 +5,7 @@ import { FX } from '@/lib/config/currency'
 import type { CalculatorInputs } from '@/features/calculator/types'
 import { fallbackEstimates } from '@/features/calculator/services/pricing/defaults'
 import { computePricing } from '@/features/calculator/services/pricing/pricingEngine'
+import { useApiKeyStore } from '@/features/calculator/store/useApiKeyStore'
 import { useCalculatorStore } from '@/features/calculator/store/useCalculatorStore'
 
 /**
@@ -18,6 +19,7 @@ export function usePricing() {
   const setPhase = useCalculatorStore((s) => s.setPhase)
   const setEstimates = useCalculatorStore((s) => s.setEstimates)
   const setResult = useCalculatorStore((s) => s.setResult)
+  const apiKey = useApiKeyStore((s) => s.apiKey)
 
   const runEstimate = useCallback(async () => {
     setPhase('estimating')
@@ -26,7 +28,7 @@ export function usePricing() {
       const res = await fetch('/api/calculator/estimate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ inputs: fullInputs }),
+        body: JSON.stringify({ inputs: fullInputs, apiKey }),
       })
       if (!res.ok) throw new Error(`estimate ${res.status}`)
       const data = await res.json()
@@ -44,7 +46,7 @@ export function usePricing() {
       )
     }
     setPhase('review')
-  }, [inputs, setPhase, setEstimates])
+  }, [inputs, apiKey, setPhase, setEstimates])
 
   const runProposal = useCallback(async () => {
     if (!estimates) return
@@ -54,7 +56,7 @@ export function usePricing() {
       const res = await fetch('/api/calculator/proposal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ inputs: fullInputs, estimates }),
+        body: JSON.stringify({ inputs: fullInputs, estimates, apiKey }),
       })
       if (!res.ok) throw new Error(`proposal ${res.status}`)
       const data = await res.json()
@@ -64,7 +66,7 @@ export function usePricing() {
       const pricing = computePricing(fullInputs, estimates, FX)
       setResult(pricing, null, true)
     }
-  }, [inputs, estimates, setPhase, setResult])
+  }, [inputs, estimates, apiKey, setPhase, setResult])
 
   /** Precio en vivo recalculado en el cliente (para el preview en review). */
   const previewPricing =

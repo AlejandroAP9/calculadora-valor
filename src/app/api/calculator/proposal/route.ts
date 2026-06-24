@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { FX } from '@/lib/config/currency'
 import { ValueEstimatesSchema } from '@/features/calculator/schemas/estimates.schema'
 import { CalculatorInputsSchema } from '@/features/calculator/schemas/inputs.schema'
+import { MISSING_API_KEY_MESSAGE, extractApiKey } from '@/features/calculator/services/apiKey'
 import { generateProposal } from '@/features/calculator/services/generateProposal'
 import { computePricing } from '@/features/calculator/services/pricing/pricingEngine'
 
@@ -19,6 +20,11 @@ export async function POST(req: Request) {
     body = await req.json()
   } catch {
     return NextResponse.json({ error: 'JSON inválido' }, { status: 400 })
+  }
+
+  const apiKey = extractApiKey(body)
+  if (!apiKey) {
+    return NextResponse.json({ error: MISSING_API_KEY_MESSAGE }, { status: 400 })
   }
 
   const { inputs, estimates } = (body ?? {}) as { inputs?: unknown; estimates?: unknown }
@@ -42,7 +48,7 @@ export async function POST(req: Request) {
   const pricing = computePricing(parsedInputs.data, parsedEstimates.data, FX)
 
   try {
-    const proposal = await generateProposal(parsedInputs.data, pricing)
+    const proposal = await generateProposal(parsedInputs.data, pricing, apiKey)
     return NextResponse.json({ pricing, proposal, proposalError: false })
   } catch (error) {
     console.error('[proposal] generateProposal falló:', error)

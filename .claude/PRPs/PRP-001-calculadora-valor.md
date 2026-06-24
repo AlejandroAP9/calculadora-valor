@@ -119,3 +119,14 @@ cuando `generateObject` falla.
 3. **Proceso**: esta feature se construyó sin PRP previo. Funcionó (compila, pasa
    tests, sigue el Golden Path), pero saltarse el blueprint rompe la disciplina de
    "aprobación antes de implementar". La próxima feature arranca desde un PRP.
+4. **Auditoría de seguridad + BYOK (2026-06-24)**: la primera versión usaba una
+   API key de OpenRouter del servidor (`OPENROUTER_API_KEY`), lo que dejaba los
+   endpoints `/api/calculator/*` como un vector de costo (cualquiera podía quemar
+   el crédito del dueño). Se migró a **BYOK (Bring Your Own Key)**: cada usuario
+   pega su propia key en la UI (`ApiKeyField` + `useApiKeyStore`, persistida sólo
+   en su localStorage, nunca en BD), se manda por request y las rutas la exigen
+   (`extractApiKey` → 400 si falta). Esto elimina el riesgo de costo de raíz. Se
+   añadieron además `max` a `projectDescription` (2000) y `techStack` (20×60) para
+   acotar el costo de tokens por request. Resto de la auditoría: secretos limpios,
+   key server-only, Zod en entradas, sin XSS, prompt injection mitigado por el
+   motor determinista.

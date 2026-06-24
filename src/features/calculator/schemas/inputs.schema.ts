@@ -8,11 +8,13 @@ export const CalculatorInputsSchema = z.object({
   projectDescription: z
     .string()
     .min(10)
+    .max(2000)
     .describe('Qué construyó el usuario, en sus palabras (texto libre)'),
-  niche: z.string().min(2).describe('Nicho o industria del cliente final (ej: clínica dental)'),
+  niche: z.string().min(2).max(80).describe('Nicho o industria del cliente final (ej: clínica dental)'),
   hoursInvested: z.number().positive().describe('Horas que el usuario invirtió en construirlo'),
   techStack: z
-    .array(z.string())
+    .array(z.string().min(1).max(60))
+    .max(20)
     .describe('Tecnologías usadas: Claude API, n8n, GHL, VPS, WhatsApp API, etc.'),
   clientRevenueSize: RevenueSizeSchema.describe('Tamaño de facturación del cliente'),
   saleModality: SaleModalitySchema.describe('Modalidad de venta'),
