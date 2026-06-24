@@ -133,4 +133,12 @@ IA, store y componentes). Las rutas de IA están en `src/app/api/calculator/`.
 
 ---
 
+## Licencia
+
+[MIT](LICENSE) © 2026 Alejandro (EducMark). Puedes clonarla, copiarla, modificarla,
+desplegarla y venderla; la única condición es conservar el aviso de copyright del
+archivo [`LICENSE`](LICENSE).
+
+---
+
 Construido con **Raíz** para la comunidad **Imperio Agéntico**.
