@@ -22,15 +22,27 @@ export function ResultView() {
   const result = useCalculatorStore((s) => s.result)
   const proposal = useCalculatorStore((s) => s.proposal)
   const proposalError = useCalculatorStore((s) => s.proposalError)
+  const inputs = useCalculatorStore((s) => s.inputs)
   const reset = useCalculatorStore((s) => s.reset)
   const { runProposal } = usePricing()
   const [tab, setTab] = useState<Tab>('precios')
+  const [pdfState, setPdfState] = useState<'idle' | 'loading' | 'error'>('idle')
 
   if (!result) return null
 
-  const handlePrint = () => {
-    setTab('roi')
-    setTimeout(() => window.print(), 120)
+  // Genera el PDF de un clic. @react-pdf/renderer se importa aquí (dinámico) para
+  // no cargarlo en el bundle inicial de la página.
+  const handleDownloadPdf = async () => {
+    if (!proposal) return
+    setPdfState('loading')
+    try {
+      const { downloadProposalPdf } = await import('@/features/calculator/pdf/proposalPdf')
+      await downloadProposalPdf(result, proposal, inputs)
+      setPdfState('idle')
+    } catch (e) {
+      console.error('[pdf] no se pudo generar:', e)
+      setPdfState('error')
+    }
   }
 
   return (
@@ -40,9 +52,17 @@ export function ResultView() {
           <h2 className="text-2xl font-bold text-zinc-900">Tu propuesta está lista</h2>
           <p className="text-sm text-zinc-500">Precios defendibles, en lenguaje de negocio.</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handlePrint} disabled={!proposal}>
-            Descargar PDF
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            onClick={handleDownloadPdf}
+            disabled={!proposal || pdfState === 'loading'}
+          >
+            {pdfState === 'loading'
+              ? 'Generando…'
+              : pdfState === 'error'
+                ? 'Reintentar PDF'
+                : 'Descargar PDF'}
           </Button>
           <Button variant="ghost" onClick={reset}>
             Empezar de nuevo
