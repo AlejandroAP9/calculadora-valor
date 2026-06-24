@@ -65,7 +65,11 @@ La lógica (en [`src/features/calculator/services/pricing/`](src/features/calcul
 
 ## Puesta en marcha
 
-Requisitos: Node 18+ y una API key de [OpenRouter](https://openrouter.ai/).
+**La forma fácil:** sigue **[`instalar.md`](instalar.md)** — instala solo con tu agente de
+IA, con un comando (`bash instalar.sh`), o manual. Requisitos: Node 18+ y una API key de
+[OpenRouter](https://openrouter.ai/keys).
+
+Manual, en 3 pasos:
 
 ```bash
 # 1. Instalar dependencias
